@@ -12,17 +12,14 @@ def parse_input():
         if not "www." in page.split("://")[1]:
             print(str(page.split("://")[1]))
             page = "http://www." + page.split("://")[1]
-
-    if "https://" in page:
+    elif "https://" in page:
         if not "www." in page.split("://")[1]:
             print(str(page.split("://")[1]))
             page = "https://www." + page.split("://")[1]
-
     else:
         page = "http://www." + page
 
-    url = "" + str(page.split('www.')[1])
-    return str(url)
+    return str(page)
 
 def grab_page(url):
     """function to prepare Download and get first index.html"""
@@ -46,8 +43,8 @@ def grab_page(url):
 
 def swegt(url):
     """Function to download Webpage"""
-    errorcode = subprocess.check_output(["wget", "--show-progress", "--continue", "--no-clobber", "--mirror", "--convert-links", "--adjust-extension", "--page-requisites", "--no-parent", "-nd", "-P", str(url), str(url)])
-    if errorcode != 0:
+    errorcode = subprocess.Popen(["wget", "--show-progress", "--continue", "--mirror", "--convert-links", "--adjust-extension", "--page-requisites", "--no-parent", "-nd", "-P", str(url), str(url)]).communicate()
+    if errorcode != "0":
         print(errorcode)
         swegt(str(url))
     else:
@@ -70,8 +67,6 @@ def create_script(url, index, witch):
         filedescriptor.write("#!/bin/bash\n\n")
         filedescriptor.write(str(witch) + " file://$" + index + " &")
     os.chmod(name, 0o777)
-    execcute = "./" + str(name)
-    os.system(execcute)
     exit(0)
 
 def main():
