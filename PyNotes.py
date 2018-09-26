@@ -1,3 +1,13 @@
+#Extremely Important
+if os.name == "nt":
+    SLASH = "\\"
+else:
+    SLASH = "/"
+
+#To do anything based on OS put this in a Function
+
+
+
 #How to create a Timer based on current Time
 
 import sys
@@ -32,6 +42,15 @@ def overtimer(Time):
             print(str(dt.second))
             #do_stuff()
 
-#--------------------------------------------------------
+#---Download Files via Requests (install via pip)
+import requests
 
-timer(5)
+def download(url, outname):
+    header = requests.utils.default_headers()
+    header.update({"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.0 Safari/537.36",})
+
+    with open(outname, "wb") as file:#open in binary write mode
+        response = requests.get(url, headers=header)#get request
+        file.write(response.content)#write to file
+    return
+#GG
